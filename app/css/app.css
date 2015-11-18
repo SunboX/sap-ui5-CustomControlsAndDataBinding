@@ -1,0 +1,47 @@
+:focus {
+    outline: none !important;
+}
+
+::-moz-focus-inner {
+    border: 0 !important;
+}
+
+.fixFlexOverflow {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+}
+
+.appControlsSCLI.sapMLIB {
+    padding: 0;
+}
+
+.appControlsSCLI .sapMLIBContent {
+    margin-bottom: -0.3rem;
+}
+
+.appControlsSCLI .sapMPanel.sapUiNoContentPadding > .sapMPanelContent {
+    padding-right: 1rem;
+}
+
+.noDataTextMultilineCenter .sapMListNoData {
+    height: auto;
+}
+
+.noDataTextMultilineCenter .sapMListNoDataText {
+    white-space: normal;
+    text-align: center;
+    padding: 1rem;
+}
+
+.appControlsSCF {
+    border-top: 1px solid #e5e5e5;
+}
+
+.largeText.sapMLabel {
+    font-size: 1.5rem;
+}
+
+.coloredText.sapMLabel {
+    color: #009de0;
+}
