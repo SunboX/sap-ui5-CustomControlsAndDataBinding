@@ -45,3 +45,7 @@
 .coloredText.sapMLabel {
     color: #009de0;
 }
+
+.sapMDialogSection .sapUiFormResLayout > div {
+    background-color: transparent;
+}

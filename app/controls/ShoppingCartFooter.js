@@ -1,3 +1,5 @@
+$.sap.require('sap.m.BackgroundDesign');
+
 sap.m.Panel.extend('app.controls.ShoppingCartFooter', {
 	metadata: {
 		properties: {

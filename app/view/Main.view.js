@@ -1,8 +1,9 @@
 $.sap.require('sap.ui.core.format.NumberFormat');
-$.sap.require('sap.m.MessageBox');
-$.sap.require('sap.m.Dialog');
 $.sap.require('sap.ui.model.FilterOperator');
 
+$.sap.require('sap.m.MessageBox');
+
+$.sap.require('app.controls.AddItemDialog');
 $.sap.require('app.controls.ShoppingCartListItem');
 $.sap.require('app.controls.ShoppingCartFooter');
 
@@ -14,7 +15,7 @@ sap.ui.jsview('app.view.Main', {
 
     createContent: function (controller) {
         var view = this;
-        
+
         var numberFormat = sap.ui.core.format.NumberFormat.getFloatInstance({
             minFractionDigits: 2,
             maxFractionDigits: 2,
@@ -22,7 +23,7 @@ sap.ui.jsview('app.view.Main', {
             groupingSeparator: '.',
             decimalSeparator: ','
         });
-        
+
         var list = new sap.m.List(this.createId('shopping-cart-list'), {
             noDataText: 'Please add an item to your shopping cart.',
             items: {
@@ -36,6 +37,13 @@ sap.ui.jsview('app.view.Main', {
                         formatter: function (price) {
                             return numberFormat.format(price);
                         }
+                    },
+                    press: function (e) {
+                        var model = e.getSource().getBindingContext('viewModel');
+                        sap.m.MessageBox.show('You selected ' + model.getProperty('name'), {
+                            icon: sap.m.MessageBox.Icon.INFORMATION,
+                            title: 'Item selected'
+                        });
                     }
                 }),
                 filters: [
@@ -72,97 +80,43 @@ sap.ui.jsview('app.view.Main', {
                     controller.checkout();
                 }
             }),
-            content:  new sap.ui.layout.FixFlex({
-                    fixFirst: false,
-                    fixContentSize: '5rem',
-                    flexContent: new sap.m.ScrollContainer({
-                        vertical: true,
-                        horizontal: false,
-                        height: '100%',
-                        content: list
-                    }),
-                    fixContent: footer
+            content: new sap.ui.layout.FixFlex({
+                fixFirst: false,
+                fixContentSize: '5rem',
+                flexContent: new sap.m.ScrollContainer({
+                    vertical: true,
+                    horizontal: false,
+                    height: '100%',
+                    content: list
                 }),
+                fixContent: footer
+            }),
             footer: new sap.m.Bar({
                 contentMiddle: new sap.m.Button({
-                        text: 'Add item',
-                        width: '100%',
-                        type: sap.m.ButtonType.Emphasized,
-                        press: function (view, e) {
-                            
-                            var model = new sap.ui.model.json.JSONModel({
-                                quantity: null,
-                                name: null,
-                                price: null,
-                                deleted: false
-                            });
-                            
-                            var form = new sap.ui.layout.form.SimpleForm({
-                                maxContainerCols: 2,
-                                editable: true,
-                                content: [
-                                    new sap.m.Label({
-                                        text: 'Quantity'
-                                    }),
-                                    new sap.m.Input({
-                                        type: sap.m.InputType.Number,
-                                        value: {
-                                            path: '/quantity',
-                                            //type: sap.ui.model.type.Integer
-                                        }
-                                    }),
-                                    new sap.m.Label({
-                                        text: 'Name'
-                                    }),
-                                    new sap.m.Input({
-                                        type: sap.m.InputType.Text,
-                                        value: '{/name}'
-                                    }),
-                                    new sap.m.Label({
-                                        text: 'Price'
-                                    }),
-                                    new sap.m.Input({
-                                        type: sap.m.InputType.Number,
-                                        value: {
-                                            path: '/price',
-                                            //type: sap.ui.model.type.Float
-                                        }
-                                    }),
-                                ]
-                            });
-                            
-                            form.setModel(model);
-                            
-                            var dialog = new sap.m.Dialog({
-                                modal: true,
-                                title: 'Add a new item',
-                                buttons: [
-                                    new sap.m.Button({
-                                        text : 'Cancel',
-                                        press : function() {
-                                            dialog.close();
-                                        }
-                                    }),
-                                    new sap.m.Button({
-                                        text : 'Add',
-                                        type: sap.m.ButtonType.Emphasized,
-                                        press : function(view) {
-                                            var viewModel = view.getModel('viewModel');
-                                            var items = viewModel.getProperty('/items');
-                                            items.push(model.getData());
-                                            viewModel.setProperty('/items', items)
-                                            dialog.close();
-                                        }.bind(null, view)
-                                    })
-                                ],
-                                content: form
-                            });
-                            dialog.open();
-                        }.bind(null, view)
-                    }),
+                    text: 'Add item',
+                    width: '100%',
+                    type: sap.m.ButtonType.Emphasized,
+                    press: function (view, e) {
+
+                        var dialog = new app.controls.AddItemDialog({
+                            cancel: function (view) {
+                                dialog.close();
+                            },
+                            submit: function (view, e) {
+                                var data = e.getParameter('dataSet');
+                                if (data.name) {
+                                    view.getModel('viewModel').appendToList('/items', data);
+                                }
+                                dialog.close();
+                            }.bind(null, view)
+                        })
+
+                        dialog.open();
+
+                    }.bind(null, view)
+                }),
             })
         });
         return page;
     }
-
 });

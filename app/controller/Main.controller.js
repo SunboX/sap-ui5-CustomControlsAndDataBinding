@@ -1,9 +1,10 @@
 $.sap.require('sap.m.MessageBox');
+$.sap.require('app.model.JSONModelWithListProperty');
 
 sap.ui.controller('app.controller.Main', {
 
     onInit: function () {
-        var viewModel = new sap.ui.model.json.JSONModel({
+        var viewModel = new app.model.JSONModelWithListProperty({
             items: [{
                 quantity: 2,
                 name: 'Primitivo Red Wine',
@@ -40,9 +41,5 @@ sap.ui.controller('app.controller.Main', {
             icon: sap.m.MessageBox.Icon.INFORMATION,
             title: 'Checkout'
         });
-    },
-
-    addItem: function () {
-
     }
 });
