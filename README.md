@@ -4,6 +4,26 @@ Many informations about how to write custom controls and how to bind data using 
 
 So basically, this will be a sample app showing some tips, tricks and best practices.
 
+## How to run the app
+
+Dependencies are installed and managed via [npm](https://www.npmjs.com/), the [Node.js](https://nodejs.org/) package manager. This project requires stable Node.js versions `>= 0.8.0`. Odd version numbers of Node.js are considered unstable development versions.
+
+Before setting up the project ensure that your npm is up-to-date by running `npm update -g npm` (this might require `sudo` on certain systems).
+
+### Get all dependencies
+
+Run this command in the root of the project folder
+```bash
+node install
+```
+
+### Running the dev server
+
+To run the dev server, call this command in the root of the project folder
+```bash
+grunt
+```
+
 ## Screenshot
 
 <img src="https://raw.githubusercontent.com/SunboX/sap-ui5-CustomListItemControl/master/screenshots/app.png" width="300"/>
