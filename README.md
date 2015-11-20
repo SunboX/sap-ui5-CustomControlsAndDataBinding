@@ -23,6 +23,10 @@ The dev server is initialized using Grunt, a widely used task runner for buildin
 
 In order to get started, you'll want to install Grunt's command line interface (CLI) globally. You may need to use `sudo` (for OSX, *nix, BSD etc) or run your command shell as Administrator (for Windows) to do this.
 
+```bash
+npm install -g grunt-cli
+```
+
 To run the dev server, call this command in the root of the project folder
 ```bash
 grunt
