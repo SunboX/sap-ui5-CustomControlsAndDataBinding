@@ -10,6 +10,7 @@ var urlConfig = {
 
 // setup express
 var express = require('express'),
+    path = require('path'),
     compression = require('compression'),
     serveIndex = require('serve-index'),
     serveStatic = require('serve-static'),
@@ -24,10 +25,10 @@ express.static.mime.default_type = 'text/xml';
 app.use(compression());
 
 // serve static content
-app.use(urlPath, serveStatic(__dirname));
+app.use(urlPath, serveStatic(path.join(__dirname, 'www')));
 
 // enable directory listening
-app.use(urlPath, serveIndex(__dirname));
+app.use(urlPath, serveIndex(path.join(__dirname, 'www')));
 
 // set port to listen
 app.listen(port);

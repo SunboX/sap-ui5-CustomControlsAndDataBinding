@@ -11,21 +11,42 @@ var urlConfig = {
 module.exports = function (grunt) {
 
     // load tasks from plugins
+    grunt.loadNpmTasks('grunt-openui5');
     grunt.loadNpmTasks('grunt-express-server');
     grunt.loadNpmTasks('grunt-open');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     // config
     grunt.initConfig({
+        openui5_preload: {
+            dev: {
+                options: {
+                    resources: {
+                        cwd: 'www',
+                        src: [
+                            'app/**/*.js',
+                            'app/!Component-preload.js'
+                        ]
+                    },
+                    dest: 'www',
+                    compress: true
+                },
+                components: true
+            }
+        },
         watch: {
             express: {
                 files: [
-                    'app/**/*.js',
-                    'app/**/*.css'
+                    'www/index.html',
+                    'www/app/**/*.js',
+                    'www/app/**/*.css'
                 ],
-                tasks: ['express:dev'],
+                tasks: [
+                    'openui5_preload:dev',
+                    'express:dev'
+                ],
                 options: {
-                    spawn: false
+                    livereload: true
                 }
             }
         },
@@ -59,7 +80,7 @@ module.exports = function (grunt) {
     });
 
     // tasks
-    grunt.registerTask('server:dev', ['express:dev', 'open:dev', 'watch']);
+    grunt.registerTask('server:dev', ['openui5_preload:dev', 'express:dev', 'open:dev', 'watch']);
     grunt.registerTask('server', ['server:dev']); // alias for "server:dev"
     grunt.registerTask('default', ['server:dev']); // default points to "server:dev" task
 
