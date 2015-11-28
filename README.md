@@ -32,6 +32,10 @@ To run the dev server, call this command in the root of the project folder
 grunt
 ```
 
+## Demo
+
+[↪ click me for demo time](http://sunbox.github.io/sap-ui5-CustomControlsAndDataBinding/www/)
+
 ## Screenshot
 
 <img src="https://raw.githubusercontent.com/SunboX/sap-ui5-CustomListItemControl/master/screenshots/app.png" width="300"/>
